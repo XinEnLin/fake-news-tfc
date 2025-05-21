@@ -1,72 +1,51 @@
-# ¤¤¤å°²·s»D¤ÀÃş¨t²Î Fake News Classifier (Taiwan TFC Version)
+# ä¸­æ–‡å‡æ–°èåˆ†é¡ç³»çµ± Fake News Classifier (Taiwan TFC Version)
 
-¥»±M®×¦®¦b«Ø¥ß¤@­Ó¨Ï¥Î¾÷¾¹¾Ç²ßªº°²·s»D¤ÀÃş¨t²Î¡A¸ê®Æ¨Ó·½¬°¡u[¥xÆW¨Æ¹ê¬d®Ö¤¤¤ß¡]TFC¡^](https://tfc-taiwan.org.tw/)¡v¡C³z¹L¤¤¤å¦ÛµM»y¨¥³B²z¡]NLP¡^§Ş³N»P¤ÀÃş¼Ò«¬¡A¨ó§U¨Ï¥ÎªÌ¿ë§O·s»D¸ê°Tªº¯u°°¡C
-
----
-
-## ? ±M®×¯S¦â
-
-- ? ¤¤¤å»y®Æ¡Gª¦¨ú¥xÆW¥»¦a°²·s»D¼á²M¸ê®Æ
-- ? ¾÷¾¹¾Ç²ß¡G¨Ï¥Î TF-IDF + Naive Bayes ¶i¦æ¤ÀÃş
-- ? NLP ³B²z¡Gµ²¦X jieba ¤Àµü»P¤¤¤å°±¥Îµüªí
-- ? ¥i¿ï Streamlit Web App §@¬°¤¬°Ê¤¶­±
+æœ¬å°ˆæ¡ˆæ—¨åœ¨å»ºç«‹ä¸€å€‹ä½¿ç”¨æ©Ÿå™¨å­¸ç¿’çš„å‡æ–°èåˆ†é¡ç³»çµ±ï¼Œè³‡æ–™ä¾†æºç‚ºã€Œ[å°ç£äº‹å¯¦æŸ¥æ ¸ä¸­å¿ƒï¼ˆTFCï¼‰](https://tfc-taiwan.org.tw/)ã€ã€‚é€éä¸­æ–‡è‡ªç„¶èªè¨€è™•ç†ï¼ˆNLPï¼‰æŠ€è¡“èˆ‡åˆ†é¡æ¨¡å‹ï¼Œå”åŠ©ä½¿ç”¨è€…è¾¨åˆ¥æ–°èè³‡è¨Šçš„çœŸå½ã€‚
 
 ---
 
-## ?? ±M®×¸ê®Æ§¨µ²ºc
+## ğŸ“Œ å°ˆæ¡ˆç‰¹è‰²
+
+- ğŸ“™ ä¸­æ–‡èªæ–™ï¼šçˆ¬å–å°ç£æœ¬åœ°å‡æ–°èæ¾„æ¸…è³‡æ–™
+- ğŸ§  æ©Ÿå™¨å­¸ç¿’ï¼šä½¿ç”¨ TF-IDF + Naive Bayes é€²è¡Œåˆ†é¡
+- âœ‚ï¸ NLP è™•ç†ï¼šçµåˆ jieba åˆ†è©èˆ‡ä¸­æ–‡åœç”¨è©è¡¨
+- ğŸ’¡ å¯é¸ Streamlit Web App ä½œç‚ºäº’å‹•ä»‹é¢
+
+---
+
+## ğŸ“ å°ˆæ¡ˆè³‡æ–™å¤¾çµæ§‹
 
 ```plaintext
 fake_news_project/
-¢u¢w¢w data/                      # Àx¦s­ì©l»P³B²z¹Lªº¸ê®Æ
-¢x   ¢u¢w¢w raw/                  # ­ì©lª¦¤U¨Óªº·s»D»P¼Ğµù¸ê®Æ¡]HTML / JSON¡^
-¢x   ¢u¢w¢w processed/            # ²M²z«áªº¸ê®Æ¡]CSV / JSON¡^
-¢x   ¢|¢w¢w stopwords/            # ¤¤¤å°±¥Îµü¦Cªí¡].txt¡^
-¢x
-¢u¢w¢w notebooks/                # ¤ÀªR»P¹êÅç Jupyter µ§°O¥»
-¢x   ¢u¢w¢w 01_data_exploration.ipynb    # ¸ê®Æ±´¯Á»P¤ÀªR
-¢x   ¢u¢w¢w 02_preprocessing.ipynb       # ¸ê®Æ²M²z»PÂ_µü
-¢x   ¢u¢w¢w 03_model_training.ipynb      # ¼Ò«¬°V½m¡]TF-IDF + Naive Bayesµ¥¡^
-¢x   ¢|¢w¢w 04_evaluation.ipynb          # ¼Ò«¬µû¦ô»PµøÄ±¤Æ
-¢x
-¢u¢w¢w src/                      # Python ¼Ò²Õ­ì©l½X
-¢x   ¢u¢w¢w crawler/              # ºô­¶ª¦ÂÎ¼Ò²Õ
-¢x   ¢x   ¢|¢w¢w tfc_crawler.py    # ª¦¨ú¥xÆW¨Æ¹ê¬d®Ö¤¤¤ß·s»D
-¢x   ¢u¢w¢w preprocessing/        # ²M²z»PÂ_µü¼Ò²Õ
-¢x   ¢x   ¢|¢w¢w clean_text.py     # ¤¤¤å²M²z»P jieba ¤Àµü
-¢x   ¢u¢w¢w features/             # ¯S¼x¤uµ{
-¢x   ¢x   ¢|¢w¢w vectorizer.py     # TF-IDF «Ø¥ß»PÀx¦s
-¢x   ¢|¢w¢w model/                # ¼Ò«¬°V½m»P¹w´ú¼Ò²Õ
-¢x       ¢|¢w¢w train_model.py    # °V½m»P«O¦s¼Ò«¬
-¢x
-¢u¢w¢w app/                      # ³Ì²×®i¥Ü¥Îªº Web App¡]¥i¿ï Streamlit¡^
-¢x   ¢|¢w¢w app.py                # UI ¥i¶K·s»D§PÂ_¯u°°
-¢x
-¢u¢w¢w outputs/                  # µ²ªG¡B¹Ïªí»P¼Ò«¬
-¢x   ¢u¢w¢w figures/              # ²V²c¯x°}¡BROC ¦±½uµ¥¹Ïªí
-¢x   ¢u¢w¢w models/               # Àx¦s°V½m¦nªº¼Ò«¬ (.pkl)
-¢x   ¢|¢w¢w logs/                 # °V½m¹Lµ{¤¤ªº°O¿ı»P log
-¢x
-¢u¢w¢w requirements.txt          # ®M¥ó»İ¨DÀÉ®×¡]pip install -r¡^
-¢u¢w¢w README.md                 # ±M®×»¡©ú
-¢|¢w¢w .gitignore                # ©¿²¤µL¥ÎÀÉ®×
-£¿£¿£¿
-
----
-
-## ¨Ï¥Î§Ş³N
-
-- Python 3.10+
-- jieba ¤¤¤å¤Àµü
-- scikit-learn
-- pandas / numpy
-- matplotlib / seaborn
-- Streamlit¡]¥i¿ï¥Î¨Ó®i¥Üµ²ªG¡^
-
----
-
-##  §Ö³t¶}©l 
-
-1. **¦w¸Ë®M¥ó**
-
-```bash
-pip install -r requirements.txt
+â”œâ”€â”€ data/                      # å„²å­˜åŸå§‹èˆ‡è™•ç†éçš„è³‡æ–™
+â”‚   â”œâ”€â”€ raw/                  # åŸå§‹çˆ¬ä¸‹ä¾†çš„æ–°èèˆ‡æ¨™è¨»è³‡æ–™ï¼ˆHTML / JSONï¼‰
+â”‚   â”œâ”€â”€ processed/            # æ¸…ç†å¾Œçš„è³‡æ–™ï¼ˆCSV / JSONï¼‰
+â”‚   â””â”€â”€ stopwords/            # ä¸­æ–‡åœç”¨è©åˆ—è¡¨ï¼ˆ.txtï¼‰
+â”‚
+â”œâ”€â”€ notebooks/                # åˆ†æèˆ‡å¯¦é©— Jupyter ç­†è¨˜æœ¬
+â”‚   â”œâ”€â”€ 01_data_exploration.ipynb    # è³‡æ–™æ¢ç´¢èˆ‡åˆ†æ
+â”‚   â”œâ”€â”€ 02_preprocessing.ipynb       # è³‡æ–™æ¸…ç†èˆ‡æ–·è©
+â”‚   â”œâ”€â”€ 03_model_training.ipynb      # æ¨¡å‹è¨“ç·´ï¼ˆTF-IDF + Naive Bayesç­‰ï¼‰
+â”‚   â””â”€â”€ 04_evaluation.ipynb          # æ¨¡å‹è©•ä¼°èˆ‡è¦–è¦ºåŒ–
+â”‚
+â”œâ”€â”€ src/                      # Python æ¨¡çµ„åŸå§‹ç¢¼
+â”‚   â”œâ”€â”€ crawler/              # ç¶²é çˆ¬èŸ²æ¨¡çµ„
+â”‚   â”‚   â””â”€â”€ tfc_crawler.py    # çˆ¬å–å°ç£äº‹å¯¦æŸ¥æ ¸ä¸­å¿ƒæ–°è
+â”‚   â”œâ”€â”€ preprocessing/        # æ¸…ç†èˆ‡æ–·è©æ¨¡çµ„
+â”‚   â”‚   â””â”€â”€ clean_text.py     # ä¸­æ–‡æ¸…ç†èˆ‡ jieba åˆ†è©
+â”‚   â”œâ”€â”€ features/             # ç‰¹å¾µå·¥ç¨‹
+â”‚   â”‚   â””â”€â”€ vectorizer.py     # TF-IDF å»ºç«‹èˆ‡å„²å­˜
+â”‚   â””â”€â”€ model/                # æ¨¡å‹è¨“ç·´èˆ‡é æ¸¬æ¨¡çµ„
+â”‚       â””â”€â”€ train_model.py    # è¨“ç·´èˆ‡ä¿å­˜æ¨¡å‹
+â”‚
+â”œâ”€â”€ app/                      # æœ€çµ‚å±•ç¤ºç”¨çš„ Web Appï¼ˆå¯é¸ Streamlitï¼‰
+â”‚   â””â”€â”€ app.py                # UI å¯è²¼æ–°èåˆ¤æ–·çœŸå½
+â”‚
+â”œâ”€â”€ outputs/                  # çµæœã€åœ–è¡¨èˆ‡æ¨¡å‹
+â”‚   â”œâ”€â”€ figures/              # æ··æ·†çŸ©é™£ã€ROC æ›²ç·šç­‰åœ–è¡¨
+â”‚   â”œâ”€â”€ models/               # å„²å­˜è¨“ç·´å¥½çš„æ¨¡å‹ (.pkl)
+â”‚   â””â”€â”€ logs/                 # è¨“ç·´éç¨‹ä¸­çš„è¨˜éŒ„èˆ‡ log
+â”‚
+â”œâ”€â”€ requirements.txt          # å¥—ä»¶éœ€æ±‚æª”æ¡ˆï¼ˆpip install -rï¼‰
+â”œâ”€â”€ README.md                 # å°ˆæ¡ˆèªªæ˜
+â””â”€â”€ .gitignore                # å¿½ç•¥ç„¡ç”¨æª”æ¡ˆ
