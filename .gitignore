@@ -1,0 +1,50 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+.env/
+.venv/
+ENV/
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Data folders (can be manually uploaded if需要)
+data/raw/
+data/processed/
+data/stopwords/
+
+# Output files (如模型、圖表、自動產生檔案)
+outputs/models/
+outputs/logs/
+outputs/figures/
+
+# Model files
+*.pkl
+*.joblib
+*.h5
+
+# Streamlit temporary cache
+.streamlit/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Exported files or temp experiments
+*.csv
+*.tsv
+*.xlsx
+*.json
