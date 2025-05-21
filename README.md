@@ -53,7 +53,7 @@ fake_news_project/
 
 ---
 
-## ? 使用技術
+## 使用技術
 
 - Python 3.10+
 - jieba 中文分詞
@@ -64,7 +64,7 @@ fake_news_project/
 
 ---
 
-## ? 快速開始
+##  快速開始 
 
 1. **安裝套件**
 
