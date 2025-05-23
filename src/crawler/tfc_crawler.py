@@ -15,35 +15,41 @@ LATEST_NEWS_URL = BASE_URL + "/latest-news?page={}"
 # 輸出的 CSV 檔案路徑
 OUTPUT_FILE = "data/raw/tfc_articles.csv"
 
+# 加入標頭來避免被網站拒絕
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/117.0.0.0 Safari/537.36"
+}
+
 # ---------------------------------------------------------
 # 取得單一頁面上的查核文章連結（只抓 /fact-check-reports/ 的文章）
 def fetch_article_links(page_num):
     url = LATEST_NEWS_URL.format(page_num)
-    res = requests.get(url)
+    res = requests.get(url, headers=HEADERS)
     if res.status_code != 200:
         print(f"❌ Failed to fetch page {page_num}")
         return []
 
-    # 解析該頁 HTML 結構
     soup = BeautifulSoup(res.text, 'html.parser')
 
-    # 找出每篇文章的 article 標籤
-    articles = soup.select("article.node--type-article")
+    # 抓 figure 區塊中的 <a> 標籤（用於連結查核文章）
+    figure_links = soup.select('figure.wp-block-kadence-image a')
 
     links = []
-    for article in articles:
-        # 每篇文章中，圖片的 <a> 標籤中包含了真正的文章連結
-        a_tag = article.select_one('.field--name-field-image a')
-        if a_tag:
-            href = a_tag.get('href')
-            if href and href.startswith("/fact-check-reports"):
-                links.append(BASE_URL + href)  # 補上完整網址
+    for a_tag in figure_links:
+        href = a_tag.get('href')
+        if href and '/fact-check-reports/' in href:
+            if href.startswith("http"):
+                links.append(href)
+            else:
+                links.append(BASE_URL + href)
+    print(f"✅ Page {page_num}: found {len(links)} article links")
     return links
+
 
 # ---------------------------------------------------------
 # 拿到單一篇文章的詳細資料（標題、日期、查核結果、內容）
 def fetch_article_detail(url):
-    res = requests.get(url)
+    res = requests.get(url, headers=HEADERS)  # ✅ 同樣加上 headers
     if res.status_code != 200:
         print(f"❌ Failed to fetch article {url}")
         return None
@@ -94,7 +100,7 @@ def save_to_csv(articles, filename):
 # 主流程：爬取前 N 頁，組合成一個資料集並存檔
 def main(max_pages=3):
     all_articles = []
-    for page in range(0, max_pages):  # 注意：TFC 的頁碼從 0 開始
+    for page in range(1, max_pages+1):  # 注意：TFC 的頁碼從 1 開始
         print(f"🔎 Fetching page {page}...")
         links = fetch_article_links(page)
         for link in links:
