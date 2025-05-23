@@ -1,50 +1,54 @@
-# Python cache files
+# Python cache
 __pycache__/
 *.py[cod]
 *.so
 
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+.env/
+
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Virtual environment
-venv/
-.env/
-.venv/
-ENV/
-
-# IDE/editor settings
+# IDE/editor
 .vscode/
 .idea/
 *.swp
 
-# System files
+# System
 .DS_Store
 Thumbs.db
 
-# Data folders (can be manually uploaded iféœ€è¦)
+# Data (raw, processed, stopwords ¡V ¥iµø»İ¨D½Õ¾ã)
 data/raw/
 data/processed/
 data/stopwords/
 
-# Output files (å¦‚æ¨¡å‹ã€åœ–è¡¨ã€è‡ªå‹•ç”¢ç”Ÿæª”æ¡ˆ)
+# Output files (¼Ò«¬¡B¹Ïªí¡B¤é»x)
 outputs/models/
 outputs/logs/
 outputs/figures/
 
-# Model files
+# Streamlit cache
+.streamlit/
+
+# Logs or temp files
+*.log
+*.tmp
+
+# Model artifacts
 *.pkl
 *.joblib
 *.h5
 
-# Streamlit temporary cache
-.streamlit/
-
-# Logs and temporary files
-*.log
-*.tmp
-
-# Exported files or temp experiments
+# Exported/intermediate data files
 *.csv
 *.tsv
 *.xlsx
 *.json
+
+# If using __pycache__ inside src
+src/**/__pycache__/
